@@ -14,10 +14,9 @@ export function uploadBuffer(buffer, options = {}) {
     const stream = cloudinary.uploader.upload_stream(
       {
         folder: "portfolio",
-        transformation: [{ width: 1600, crop: "limit", quality: "auto" }],
         ...options,
       },
-      (error, result) => (error ? reject(error) : resolve(result))
+      (error, result) => (error ? reject(error) : resolve(result)),
     );
     stream.end(buffer);
   });

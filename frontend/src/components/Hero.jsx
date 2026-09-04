@@ -9,13 +9,13 @@ export default function Hero({ profile }) {
   return (
     <section
       id="top"
-      className="relative flex min-h-screen flex-col-reverse items-center gap-10 overflow-hidden px-6 pt-28 md:flex-row md:gap-6 md:pt-0 lg:px-16"
+      className="relative flex min-h-screen flex-col-reverse items-center gap-8 overflow-hidden px-4 pb-12 pt-28 sm:px-6 md:flex-row md:gap-6 md:pt-0 lg:px-16"
     >
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="w-full max-w-xl md:w-1/2"
+        className="w-full max-w-xl min-w-0 md:w-1/2"
       >
         <p className="font-mono text-sm text-cyan">{title}</p>
         <h1 className="mt-3 font-display text-4xl font-semibold leading-tight text-bone sm:text-5xl lg:text-6xl">
@@ -77,7 +77,14 @@ export default function Hero({ profile }) {
         </div>
       </motion.div>
 
-      <div className="h-[280px] w-full md:h-[520px] md:w-1/2">
+      <div className="relative h-[280px] w-full min-w-0 sm:h-[340px] md:h-[520px] md:w-1/2">
+        {profile.avatarUrl && (
+          <img
+            src={profile.avatarUrl}
+            alt={`${name}'s profile`}
+            className="absolute left-1/2 top-1/2 z-10 h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-ink object-cover shadow-2xl sm:h-36 sm:w-36"
+          />
+        )}
         <Hero3D />
       </div>
     </section>

@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { Sparkles, Send, Loader2 } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 import client from "../api/client.js";
 
 const SUGGESTIONS = [
@@ -33,10 +34,15 @@ export default function AIChatWidget({ name }) {
       });
       setMessages([...nextHistory, { role: "assistant", content: data.reply }]);
     } catch (err) {
-      setError("Couldn't reach the AI assistant right now. Try again in a moment.");
+      setError(
+        "Couldn't reach the AI assistant right now. Try again in a moment.",
+      );
     } finally {
       setLoading(false);
-      setTimeout(() => endRef.current?.scrollIntoView({ behavior: "smooth" }), 50);
+      setTimeout(
+        () => endRef.current?.scrollIntoView({ behavior: "smooth" }),
+        50,
+      );
     }
   }
 
@@ -44,11 +50,13 @@ export default function AIChatWidget({ name }) {
     <section id="ask" className="mx-auto max-w-2xl px-6 py-16 lg:px-16">
       <div className="flex items-center gap-2">
         <Sparkles size={20} className="text-violet" />
-        <h2 className="font-display text-2xl font-semibold text-bone sm:text-3xl">Ask about {name || "me"}</h2>
+        <h2 className="font-display text-2xl font-semibold text-bone sm:text-3xl">
+          Ask about {name || "me"}
+        </h2>
       </div>
       <p className="mt-3 text-sm text-slate">
-        Hiring for a role? Ask this assistant anything about my experience, projects, or skills — it only answers
-        from what's actually on this page.
+        Hiring for a role? Ask this assistant anything about my experience,
+        projects, or skills — it only answers from what's actually on this page.
       </p>
 
       <div className="mt-6 flex min-h-[220px] flex-col rounded-lg border border-white/10 bg-ink-raised p-4">
@@ -71,10 +79,29 @@ export default function AIChatWidget({ name }) {
             <div
               key={i}
               className={`max-w-[85%] rounded-lg px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${
-                m.role === "user" ? "ml-auto bg-amber text-ink" : "bg-white/5 text-bone"
+                m.role === "user"
+                  ? "ml-auto bg-amber text-ink"
+                  : "bg-white/5 text-bone"
               }`}
             >
-              {m.content}
+              {m.role === "assistant" ? (
+                <ReactMarkdown
+                  components={{
+                    a: ({ node, ...props }) => (
+                      <a
+                        {...props}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-cyan underline decoration-cyan/40 underline-offset-2 hover:text-bone"
+                      />
+                    ),
+                  }}
+                >
+                  {m.content}
+                </ReactMarkdown>
+              ) : (
+                m.content
+              )}
             </div>
           ))}
 

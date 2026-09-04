@@ -11,10 +11,11 @@ const ProjectSchema = new mongoose.Schema(
     githubUrl: String,
     liveUrl: String,
     imageUrl: String,
+    imageUrls: [String],
     featured: { type: Boolean, default: false },
     order: { type: Number, default: 0 },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export default mongoose.model("Project", ProjectSchema);

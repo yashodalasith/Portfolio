@@ -6,9 +6,11 @@ const CertificationSchema = new mongoose.Schema(
     issuer: { type: String, required: true },
     date: { type: String, default: "" },
     url: String,
+    fileUrl: String,
+    fileType: String,
     order: { type: Number, default: 0 },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export default mongoose.model("Certification", CertificationSchema);

@@ -15,15 +15,21 @@ export default function Navbar({ name }) {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40 border-b border-white/5 bg-ink/80 backdrop-blur">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <a href="#top" className="font-display text-lg font-semibold tracking-tight text-bone">
+      <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
+        <a
+          href="#top"
+          className="min-w-0 truncate font-display text-lg font-semibold tracking-tight text-bone"
+        >
           {name || "Portfolio"}
         </a>
 
         <ul className="hidden gap-8 md:flex">
           {LINKS.map((link) => (
             <li key={link.href}>
-              <a href={link.href} className="text-sm text-slate transition-colors hover:text-bone">
+              <a
+                href={link.href}
+                className="text-sm text-slate transition-colors hover:text-bone"
+              >
                 {link.label}
               </a>
             </li>
