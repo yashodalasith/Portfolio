@@ -88,7 +88,7 @@ export default function AdminDashboard() {
 
   function logout() {
     localStorage.removeItem("admin_token");
-    navigate("/admin/login");
+    navigate("/");
   }
 
   return (
