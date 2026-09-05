@@ -105,7 +105,7 @@ export default function AdminDashboard() {
         </button>
       </div>
 
-      <div className="mt-6 flex flex-wrap gap-2 border-b border-white/10 pb-4">
+      <div className="mt-6 flex flex-wrap gap-2 border-b border-line pb-4">
         {TABS.map((t) => (
           <button
             key={t}
@@ -113,7 +113,7 @@ export default function AdminDashboard() {
             className={`rounded-full px-4 py-2 text-xs font-medium capitalize ${
               tab === t
                 ? "bg-amber text-ink"
-                : "border border-white/10 text-slate"
+                : "border border-line text-slate"
             }`}
           >
             {t}

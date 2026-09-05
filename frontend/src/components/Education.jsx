@@ -1,8 +1,10 @@
+import SectionKicker from "./SectionKicker.jsx";
 export default function Education({ education }) {
   if (!education?.length) return null;
   return (
     <section id="education" className="mx-auto max-w-3xl px-6 py-16 lg:px-16">
-      <h2 className="font-display text-2xl font-semibold text-bone sm:text-3xl">Education</h2>
+      <SectionKicker index="05" label="EDUCATION" />
+      <h2 className="font-display text-[clamp(1.75rem,3vw+1rem,2.75rem)] font-semibold text-bone">Education</h2>
       <div className="mt-8 space-y-8">
         {education.map((ed, i) => (
           <div key={ed._id || i}>

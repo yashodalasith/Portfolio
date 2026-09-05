@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import ThemeToggle from "./ThemeToggle.jsx";
 
 const LINKS = [
   { href: "#about", label: "About" },
@@ -14,7 +15,7 @@ export default function Navbar({ name }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 border-b border-white/5 bg-ink/80 backdrop-blur">
+    <header className="fixed top-0 left-0 right-0 z-40 border-b border-line-soft bg-ink/80 backdrop-blur">
       <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
         <a
           href="#top"
@@ -36,17 +37,20 @@ export default function Navbar({ name }) {
           ))}
         </ul>
 
-        <button
-          className="text-bone md:hidden"
-          aria-label={open ? "Close menu" : "Open menu"}
-          onClick={() => setOpen((o) => !o)}
-        >
-          {open ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <button
+            className="text-bone md:hidden"
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((o) => !o)}
+          >
+            {open ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </nav>
 
       {open && (
-        <ul className="flex flex-col gap-1 border-t border-white/5 px-6 pb-4 md:hidden">
+        <ul className="flex flex-col gap-1 border-t border-line-soft px-6 pb-4 md:hidden">
           {LINKS.map((link) => (
             <li key={link.href}>
               <a

@@ -1,7 +1,11 @@
 import { useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Sparkles, Send, Loader2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import client from "../api/client.js";
+
+// All chat logic below (send, state, error handling, markdown rendering) is
+// unchanged from the original — this is a visual redesign only.
 
 const SUGGESTIONS = [
   "What's their strongest technical area?",
@@ -9,12 +13,28 @@ const SUGGESTIONS = [
   "What AI tools do they use day-to-day?",
 ];
 
+function TypingIndicator() {
+  return (
+    <div className="flex items-center gap-1.5 rounded-lg bg-line-soft px-4 py-3">
+      {[0, 1, 2].map((i) => (
+        <motion.span
+          key={i}
+          className="h-1.5 w-1.5 rounded-full bg-cyan"
+          animate={{ opacity: [0.3, 1, 0.3], y: [0, -3, 0] }}
+          transition={{ duration: 1, repeat: Infinity, delay: i * 0.15, ease: "easeInOut" }}
+        />
+      ))}
+    </div>
+  );
+}
+
 export default function AIChatWidget({ name }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const endRef = useRef(null);
+  const reduceMotion = useReducedMotion();
 
   async function send(text) {
     const question = (text ?? input).trim();
@@ -40,7 +60,7 @@ export default function AIChatWidget({ name }) {
     } finally {
       setLoading(false);
       setTimeout(
-        () => endRef.current?.scrollIntoView({ behavior: "smooth" }),
+        () => endRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" }),
         50,
       );
     }
@@ -59,83 +79,90 @@ export default function AIChatWidget({ name }) {
         projects, or skills — it only answers from what's actually on this page.
       </p>
 
-      <div className="mt-6 flex min-h-[220px] flex-col rounded-lg border border-white/10 bg-ink-raised p-4">
-        <div className="flex-1 space-y-3 overflow-y-auto">
-          {messages.length === 0 && (
-            <div className="flex flex-wrap gap-2 pt-2">
-              {SUGGESTIONS.map((s) => (
-                <button
-                  key={s}
-                  onClick={() => send(s)}
-                  className="rounded-full border border-white/10 px-3 py-1.5 text-left text-xs text-slate hover:border-cyan hover:text-cyan"
+      <div className="mt-6 flex min-h-[220px] flex-col rounded-lg border border-line bg-ink-raised p-4">
+          <div className="flex-1 space-y-3 overflow-y-auto">
+            {messages.length === 0 && (
+              <div className="flex flex-wrap gap-2 pt-2">
+                {SUGGESTIONS.map((s, i) => (
+                  <motion.button
+                    key={s}
+                    initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.08, duration: 0.4 }}
+                    whileHover={reduceMotion ? {} : { y: -2 }}
+                    onClick={() => send(s)}
+                    className="rounded-full border border-line px-3 py-1.5 text-left text-xs text-slate transition-colors hover:border-cyan hover:text-cyan"
+                  >
+                    {s}
+                  </motion.button>
+                ))}
+              </div>
+            )}
+
+            <AnimatePresence initial={false}>
+              {messages.map((m, i) => (
+                <motion.div
+                  key={i}
+                  initial={reduceMotion ? false : { opacity: 0, y: 12, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                  className={`max-w-[85%] rounded-lg px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${
+                    m.role === "user"
+                      ? "ml-auto bg-amber text-ink"
+                      : "bg-line-soft text-bone"
+                  }`}
                 >
-                  {s}
-                </button>
+                  {m.role === "assistant" ? (
+                    <ReactMarkdown
+                      components={{
+                        a: ({ node, ...props }) => (
+                          <a
+                            {...props}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="text-cyan underline decoration-cyan/40 underline-offset-2 hover:text-bone"
+                          />
+                        ),
+                      }}
+                    >
+                      {m.content}
+                    </ReactMarkdown>
+                  ) : (
+                    m.content
+                  )}
+                </motion.div>
               ))}
-            </div>
-          )}
+            </AnimatePresence>
 
-          {messages.map((m, i) => (
-            <div
-              key={i}
-              className={`max-w-[85%] rounded-lg px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${
-                m.role === "user"
-                  ? "ml-auto bg-amber text-ink"
-                  : "bg-white/5 text-bone"
-              }`}
-            >
-              {m.role === "assistant" ? (
-                <ReactMarkdown
-                  components={{
-                    a: ({ node, ...props }) => (
-                      <a
-                        {...props}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-cyan underline decoration-cyan/40 underline-offset-2 hover:text-bone"
-                      />
-                    ),
-                  }}
-                >
-                  {m.content}
-                </ReactMarkdown>
-              ) : (
-                m.content
-              )}
-            </div>
-          ))}
+            {loading && <TypingIndicator />}
+            {error && <p className="text-sm text-red-400">{error}</p>}
+            <div ref={endRef} />
+          </div>
 
-          {loading && (
-            <div className="flex items-center gap-2 text-sm text-slate">
-              <Loader2 size={16} className="animate-spin" /> Thinking…
-            </div>
-          )}
-          {error && <p className="text-sm text-red-400">{error}</p>}
-          <div ref={endRef} />
-        </div>
-
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            send();
-          }}
-          className="mt-4 flex gap-2 border-t border-white/10 pt-4"
-        >
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask a question…"
-            className="flex-1 rounded-full border border-white/10 bg-transparent px-4 py-2 text-sm text-bone placeholder:text-slate/60 focus:border-cyan"
-          />
-          <button
-            type="submit"
-            disabled={loading}
-            aria-label="Send"
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-amber text-ink disabled:opacity-50"
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              send();
+            }}
+            className="mt-4 flex gap-2 border-t border-line pt-4"
           >
-            <Send size={16} />
-          </button>
-        </form>
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Ask a question…"
+              className="flex-1 rounded-full border border-line bg-transparent px-4 py-2 text-sm text-bone placeholder:text-slate/60 focus:border-cyan"
+            />
+            <motion.button
+              type="submit"
+              disabled={loading}
+              aria-label="Send"
+              whileHover={reduceMotion ? {} : { scale: 1.08 }}
+              whileTap={reduceMotion ? {} : { scale: 0.94 }}
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-amber text-ink disabled:opacity-50"
+            >
+              {loading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
+            </motion.button>
+          </form>
       </div>
     </section>
   );

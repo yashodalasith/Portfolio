@@ -134,7 +134,7 @@ export default function ResourcePanel({
       {editingId && form && (
         <form
           onSubmit={handleSave}
-          className="mt-6 space-y-4 rounded-lg border border-white/10 bg-ink-raised p-5"
+          className="mt-6 space-y-4 rounded-lg border border-line bg-ink-raised p-5"
         >
           {fields.map((f) => {
             if (f.type === "images" || f.type === "file") {
@@ -182,7 +182,7 @@ export default function ResourcePanel({
                     onChange={(e) =>
                       setForm({ ...form, [f.key]: e.target.value })
                     }
-                    className="mt-1 w-full rounded-md border border-white/10 bg-transparent px-3 py-2 text-sm text-bone"
+                    className="mt-1 w-full rounded-md border border-line bg-transparent px-3 py-2 text-sm text-bone"
                   />
                 </div>
               );
@@ -198,7 +198,7 @@ export default function ResourcePanel({
                   onChange={(e) =>
                     setForm({ ...form, [f.key]: e.target.value })
                   }
-                  className="mt-1 w-full rounded-md border border-white/10 bg-transparent px-3 py-2 text-sm text-bone"
+                  className="mt-1 w-full rounded-md border border-line bg-transparent px-3 py-2 text-sm text-bone"
                 />
               </div>
             );
@@ -218,7 +218,7 @@ export default function ResourcePanel({
                 setEditingId(null);
                 setForm(null);
               }}
-              className="rounded-full border border-white/10 px-5 py-2 text-xs text-slate"
+              className="rounded-full border border-line px-5 py-2 text-xs text-slate"
             >
               Cancel
             </button>
@@ -230,7 +230,7 @@ export default function ResourcePanel({
         {items.map((item) => (
           <li
             key={item._id}
-            className="flex items-center justify-between rounded-md border border-white/10 px-4 py-3"
+            className="flex items-center justify-between rounded-md border border-line px-4 py-3"
           >
             <span className="text-sm text-bone">{item[titleKey]}</span>
             <div className="flex gap-3">

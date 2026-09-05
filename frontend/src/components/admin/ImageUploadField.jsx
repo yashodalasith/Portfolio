@@ -78,7 +78,7 @@ export default function ImageUploadField({
         ) : value ? (
           <img src={value} alt="" className="h-12 w-12 rounded object-cover" />
         ) : null}
-        <label className="flex cursor-pointer items-center gap-2 rounded-md border border-white/10 px-3 py-2 text-xs text-slate hover:border-cyan">
+        <label className="flex cursor-pointer items-center gap-2 rounded-md border border-line px-3 py-2 text-xs text-slate hover:border-cyan">
           <UploadCloud size={14} />
           {uploading
             ? "Uploading…"
@@ -103,7 +103,7 @@ export default function ImageUploadField({
                 ? "or paste a PDF/image URL"
                 : "or paste an image URL"
           }
-          className="min-w-0 flex-1 rounded-md border border-white/10 bg-transparent px-3 py-2 text-xs text-bone"
+          className="min-w-0 flex-1 rounded-md border border-line bg-transparent px-3 py-2 text-xs text-bone"
         />
       </div>
       {error && <p className="mt-1 text-xs text-red-400">{error}</p>}

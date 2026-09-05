@@ -1,4 +1,5 @@
 import { ExternalLink, FileText } from "lucide-react";
+import SectionKicker from "./SectionKicker.jsx";
 
 export default function Certifications({ certifications }) {
   if (!certifications?.length) return null;
@@ -7,7 +8,8 @@ export default function Certifications({ certifications }) {
       id="certifications"
       className="mx-auto max-w-3xl px-6 py-16 lg:px-16"
     >
-      <h2 className="font-display text-2xl font-semibold text-bone sm:text-3xl">
+      <SectionKicker index="06" label="CERTIFICATIONS" />
+      <h2 className="font-display text-[clamp(1.75rem,3vw+1rem,2.75rem)] font-semibold text-bone">
         Certifications
       </h2>
       <ul className="mt-8 space-y-4">

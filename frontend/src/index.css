@@ -2,27 +2,75 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Theme tokens. `:root` (and explicit [data-theme="dark"]) is the site's
+ * native dark identity; [data-theme="light"] remaps the same semantic
+ * names rather than inverting them, so accents keep their brand hue but
+ * shift lightness to stay legible on a light surface. The active theme is
+ * set on <html> by an inline script in index.html *before* paint, so
+ * there's no flash of the wrong theme on load.
+ */
+:root,
+[data-theme="dark"] {
+  --color-ink: #030304;
+  --color-ink-raised: #0a0d12;
+  --color-amber: #ff5a2e;
+  --color-cyan: #6fe3ff;
+  --color-violet: #8fa5ff;
+  --color-bone: #eef3f5;
+  --color-slate: #838d99;
+  --color-line: rgb(111 227 255 / 0.14);
+  --color-line-soft: rgb(255 255 255 / 0.05);
+  --color-line-strong: rgb(111 227 255 / 0.22);
+  --color-scrollbar-track: #030304;
+  --color-scrollbar-thumb: #1a2028;
+}
+
+[data-theme="light"] {
+  --color-ink: #f4f6f7;
+  --color-ink-raised: #ffffff;
+  --color-amber: #d6431a;
+  --color-cyan: #0891b2;
+  --color-violet: #4c5fd6;
+  --color-bone: #0b0d10;
+  --color-slate: #566270;
+  --color-line: rgb(8 145 178 / 0.16);
+  --color-line-soft: rgb(15 23 42 / 0.06);
+  --color-line-strong: rgb(8 145 178 / 0.24);
+  --color-scrollbar-track: #f4f6f7;
+  --color-scrollbar-thumb: #cfd8dc;
+}
+
+@keyframes beam-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }
 
 body {
   font-family: "Inter", sans-serif;
+  background-color: var(--color-ink);
+  color: var(--color-bone);
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 ::selection {
-  background: #F2A65A;
-  color: #0E1420;
+  background: var(--color-amber);
+  color: var(--color-ink);
 }
 
 ::-webkit-scrollbar {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #0E1420;
+  background: var(--color-scrollbar-track);
 }
 ::-webkit-scrollbar-thumb {
-  background: #2A3448;
+  background: var(--color-scrollbar-thumb);
   border-radius: 999px;
 }
 
@@ -41,6 +89,18 @@ a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid #5EEAD4;
+  outline: 2px solid var(--color-cyan);
   outline-offset: 2px;
+}
+
+/* Desktop-only custom cursor dot; see CustomCursor.jsx. Untouched on touch
+   devices and under prefers-reduced-motion, where the native cursor rules. */
+@media (hover: hover) and (pointer: fine) {
+  body.has-custom-cursor {
+    cursor: none;
+  }
+  body.has-custom-cursor a,
+  body.has-custom-cursor button {
+    cursor: none;
+  }
 }

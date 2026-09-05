@@ -1,10 +1,12 @@
+import SectionKicker from "./SectionKicker.jsx";
 export default function Experience({ experiences }) {
   if (!experiences?.length) return null;
   return (
     <section id="experience" className="mx-auto max-w-3xl px-6 py-16 lg:px-16">
-      <h2 className="font-display text-2xl font-semibold text-bone sm:text-3xl">Experience</h2>
+      <SectionKicker index="02" label="EXPERIENCE" />
+      <h2 className="font-display text-[clamp(1.75rem,3vw+1rem,2.75rem)] font-semibold text-bone">Experience</h2>
 
-      <ol className="relative mt-10 border-l border-white/10 pl-8">
+      <ol className="relative mt-10 border-l border-line pl-8">
         {experiences.map((exp, i) => (
           <li key={exp._id || i} className="mb-12 last:mb-0">
             <span className="absolute -left-[9px] flex h-4 w-4 items-center justify-center rounded-full bg-ink ring-2 ring-amber">
@@ -25,7 +27,7 @@ export default function Experience({ experiences }) {
             {exp.tags?.length > 0 && (
               <div className="mt-4 flex flex-wrap gap-2">
                 {exp.tags.map((tag) => (
-                  <span key={tag} className="rounded-full border border-white/10 px-3 py-1 font-mono text-xs text-slate">
+                  <span key={tag} className="rounded-full border border-line px-3 py-1 font-mono text-xs text-slate">
                     {tag}
                   </span>
                 ))}

@@ -71,7 +71,7 @@ export default function ProfileEditor() {
           <input
             value={form[key] || ""}
             onChange={(e) => setForm({ ...form, [key]: e.target.value })}
-            className="mt-1 w-full rounded-md border border-white/10 bg-transparent px-3 py-2 text-sm text-bone"
+            className="mt-1 w-full rounded-md border border-line bg-transparent px-3 py-2 text-sm text-bone"
           />
         </div>
       ))}
@@ -82,7 +82,7 @@ export default function ProfileEditor() {
           rows={4}
           value={form.bio || ""}
           onChange={(e) => setForm({ ...form, bio: e.target.value })}
-          className="mt-1 w-full rounded-md border border-white/10 bg-transparent px-3 py-2 text-sm text-bone"
+          className="mt-1 w-full rounded-md border border-line bg-transparent px-3 py-2 text-sm text-bone"
         />
       </div>
 
@@ -92,7 +92,7 @@ export default function ProfileEditor() {
           <input
             value={form.socials?.linkedin || ""}
             onChange={(e) => setForm({ ...form, socials: { ...form.socials, linkedin: e.target.value } })}
-            className="mt-1 w-full rounded-md border border-white/10 bg-transparent px-3 py-2 text-sm text-bone"
+            className="mt-1 w-full rounded-md border border-line bg-transparent px-3 py-2 text-sm text-bone"
           />
         </div>
         <div>
@@ -100,12 +100,12 @@ export default function ProfileEditor() {
           <input
             value={form.socials?.github || ""}
             onChange={(e) => setForm({ ...form, socials: { ...form.socials, github: e.target.value } })}
-            className="mt-1 w-full rounded-md border border-white/10 bg-transparent px-3 py-2 text-sm text-bone"
+            className="mt-1 w-full rounded-md border border-line bg-transparent px-3 py-2 text-sm text-bone"
           />
         </div>
       </div>
 
-      <div className="space-y-4 border-t border-white/10 pt-4">
+      <div className="space-y-4 border-t border-line pt-4">
         <p className="text-xs uppercase tracking-wide text-slate">Skills</p>
         {SKILL_GROUPS.map((g) => (
           <div key={g.key}>
@@ -113,7 +113,7 @@ export default function ProfileEditor() {
             <input
               value={form.skills[g.key]}
               onChange={(e) => setForm({ ...form, skills: { ...form.skills, [g.key]: e.target.value } })}
-              className="mt-1 w-full rounded-md border border-white/10 bg-transparent px-3 py-2 text-sm text-bone"
+              className="mt-1 w-full rounded-md border border-line bg-transparent px-3 py-2 text-sm text-bone"
             />
           </div>
         ))}

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight, Github, ExternalLink } from "lucide-react";
+import { SpotlightOverlay, useTiltSpotlight } from "../hooks/useTiltSpotlight.jsx";
+import SectionKicker from "./SectionKicker.jsx";
 
 function ProjectCard({ project }) {
   const images = project.imageUrls?.length
@@ -8,13 +10,20 @@ function ProjectCard({ project }) {
       ? [project.imageUrl]
       : [];
   const [activeImage, setActiveImage] = useState(0);
+  const { ref, handlers } = useTiltSpotlight({ tiltDegrees: 4 });
+
   return (
-    <article className="group flex flex-col overflow-hidden rounded-lg border border-white/10 bg-ink-raised transition-colors hover:border-cyan/40">
+    <article
+      ref={ref}
+      {...handlers}
+      className="group relative flex flex-col overflow-hidden rounded-xl border border-line bg-ink-raised/70 shadow-[0_0_0_1px_rgba(111,227,255,0.05)] backdrop-blur-md transition-[border-color,transform,box-shadow] duration-300 ease-out hover:border-cyan/50 hover:shadow-[0_0_40px_-12px_rgba(111,227,255,0.35)] [transform-style:preserve-3d]"
+    >
+      <SpotlightOverlay />
       {/* terminal-window chrome, since this is a code-first portfolio */}
-      <div className="flex items-center gap-1.5 border-b border-white/10 px-4 py-2.5">
-        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+      <div className="flex items-center gap-1.5 border-b border-line px-4 py-2.5">
+        <span className="h-2.5 w-2.5 rounded-full bg-line-strong" />
+        <span className="h-2.5 w-2.5 rounded-full bg-line-strong" />
+        <span className="h-2.5 w-2.5 rounded-full bg-line-strong" />
         <span className="ml-3 truncate font-mono text-xs text-slate">
           {project.category}
         </span>
@@ -91,7 +100,7 @@ function ProjectCard({ project }) {
             {project.technologies.map((t) => (
               <span
                 key={t}
-                className="rounded-full border border-white/10 px-2.5 py-1 font-mono text-[11px] text-cyan"
+                className="rounded-full border border-line px-2.5 py-1 font-mono text-[11px] text-cyan"
               >
                 {t}
               </span>
@@ -130,10 +139,14 @@ export default function Projects({ projects }) {
   if (!projects?.length) return null;
   return (
     <section id="projects" className="mx-auto max-w-6xl px-6 py-16 lg:px-16">
-      <h2 className="font-display text-2xl font-semibold text-bone sm:text-3xl">
+      <SectionKicker index="03" label="PROJECTS" />
+      <h2 className="font-display text-[clamp(1.75rem,3vw+1rem,2.75rem)] font-semibold text-bone">
         Projects
       </h2>
-      <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div
+        className="mt-10 grid gap-6"
+        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(320px, 100%), 1fr))" }}
+      >
         {projects.map((p) => (
           <ProjectCard key={p._id || p.title} project={p} />
         ))}
