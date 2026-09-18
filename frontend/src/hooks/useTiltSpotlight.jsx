@@ -29,7 +29,9 @@ export function useTiltSpotlight({ tiltDegrees = 6, radius = 320 } = {}) {
   };
 
   const handleLeave = () => {
-    if (ref.current) ref.current.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg)";
+    if (ref.current)
+      ref.current.style.transform =
+        "perspective(900px) rotateX(0deg) rotateY(0deg)";
   };
 
   return {

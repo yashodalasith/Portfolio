@@ -4,6 +4,9 @@ import { Sparkles, Send, Loader2, Wand2, Trash2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import client from "../api/client.js";
 
+// All chat logic below (send, state, error handling, markdown rendering) is
+// unchanged from the original — this is a visual redesign only.
+
 const SUGGESTIONS = [
   "What's their strongest technical area?",
   "Tell me about the Nexar project.",
