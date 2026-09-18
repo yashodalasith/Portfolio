@@ -46,6 +46,7 @@ jobs:
           NODE_ENV: production
           VITE_ENABLE_ADMIN: "false"
           VITE_API_URL: ${{ vars.VITE_API_URL }}
+          VITE_WEB3FORMS_ACCESS_KEY: ${{ vars.VITE_WEB3FORMS_ACCESS_KEY }}
         run: npm run build
 
   validate-backend:
@@ -100,6 +101,7 @@ jobs:
           NODE_ENV: production
           VITE_ENABLE_ADMIN: "false"
           VITE_API_URL: ${{ vars.VITE_API_URL }}
+          VITE_WEB3FORMS_ACCESS_KEY: ${{ vars.VITE_WEB3FORMS_ACCESS_KEY }}
         run: npm run build
         working-directory: frontend
 

@@ -3,7 +3,6 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Mail, Send, CheckCircle2, AlertCircle } from "lucide-react";
 import SectionKicker from "./SectionKicker.jsx";
 import AnimatedHeading from "./AnimatedHeading.jsx";
-import client from "../api/client.js";
 
 const initialForm = {
   name: "",
@@ -41,12 +40,26 @@ export default function Contact({ profile }) {
     setStatus({ type: "idle", message: "" });
 
     try {
-      await client.post("/contact", {
-        name: form.name,
-        email: form.email,
-        subject: form.subject,
-        message: form.message,
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY,
+          subject: form.subject,
+          from_name: form.name || "Portfolio visitor",
+          name: form.name || "Portfolio visitor",
+          email: form.email,
+          message: form.message,
+        }),
       });
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "Unable to send your message.");
+      }
 
       setForm(initialForm);
       setStatus({
@@ -55,7 +68,7 @@ export default function Contact({ profile }) {
       });
     } catch (error) {
       const message =
-        error?.response?.data?.error ||
+        error?.message ||
         "Something went wrong while sending your message.";
       setStatus({ type: "error", message });
     } finally {
