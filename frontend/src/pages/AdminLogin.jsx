@@ -25,7 +25,7 @@ export default function AdminLogin() {
 
   return (
     <div className="flex min-h-screen items-center justify-center px-6">
-      <form onSubmit={handleSubmit} className="w-full max-w-sm rounded-lg border border-white/10 bg-ink-raised p-8">
+      <form onSubmit={handleSubmit} className="w-full max-w-sm rounded-lg border border-line bg-ink-raised p-8">
         <h1 className="font-display text-xl font-semibold text-bone">Admin access</h1>
         <p className="mt-2 text-sm text-slate">Enter your PIN to manage portfolio content.</p>
 
@@ -35,7 +35,7 @@ export default function AdminLogin() {
           onChange={(e) => setPin(e.target.value)}
           placeholder="PIN"
           autoFocus
-          className="mt-6 w-full rounded-md border border-white/10 bg-transparent px-4 py-2.5 text-bone focus:border-cyan"
+          className="mt-6 w-full rounded-md border border-line bg-transparent px-4 py-2.5 text-bone focus:border-cyan"
         />
         {error && <p className="mt-3 text-sm text-red-400">{error}</p>}
 

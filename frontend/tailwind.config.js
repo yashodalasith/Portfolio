@@ -4,13 +4,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: "#0E1420",
-        "ink-raised": "#151D2E",
-        amber: "#F2A65A",
-        cyan: "#5EEAD4",
-        violet: "#8B7FD1",
-        bone: "#EDEEF0",
-        slate: "#8A94A6",
+        ink: "rgb(var(--color-ink-rgb) / <alpha-value>)",
+        "ink-raised": "rgb(var(--color-ink-raised-rgb) / <alpha-value>)",
+        amber: "rgb(var(--color-amber-rgb) / <alpha-value>)",
+        cyan: "rgb(var(--color-cyan-rgb) / <alpha-value>)",
+        violet: "rgb(var(--color-violet-rgb) / <alpha-value>)",
+        bone: "rgb(var(--color-bone-rgb) / <alpha-value>)",
+        slate: "rgb(var(--color-slate-rgb) / <alpha-value>)",
+        line: "var(--color-line)",
+        "line-soft": "var(--color-line-soft)",
+        "line-strong": "var(--color-line-strong)",
       },
       fontFamily: {
         display: ["Space Grotesk", "sans-serif"],

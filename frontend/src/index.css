@@ -2,33 +2,167 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Theme tokens. One fixed, vibrant dark identity — no light/dark toggle.
+ * The -rgb variants exist so JS/inline-style rgba() constructions can pull
+ * raw channels without re-parsing a hex string.
+ */
+:root {
+  --color-ink: #09090b;
+  --color-ink-raised: #141416;
+  --color-amber: #ff3d47;
+  --color-cyan: #22e5c0;
+  --color-violet: #7c5cff;
+  --color-bone: #f7f6f5;
+  --color-slate: #94939a;
+  --color-ink-rgb: 9 9 11;
+  --color-ink-raised-rgb: 20 20 22;
+  --color-amber-rgb: 255 61 71;
+  --color-cyan-rgb: 34 229 192;
+  --color-violet-rgb: 124 92 255;
+  --color-bone-rgb: 247 246 245;
+  --color-slate-rgb: 148 147 154;
+  --color-line: rgb(255 61 71 / 0.16);
+  --color-line-soft: rgb(255 255 255 / 0.06);
+  --color-line-strong: rgb(255 61 71 / 0.3);
+  --color-scrollbar-track: #09090b;
+  --color-scrollbar-thumb: #221f22;
+}
+
+@keyframes beam-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }
 
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   font-family: "Inter", sans-serif;
+  background-color: var(--color-ink);
+  color: var(--color-bone);
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.section-shell {
+  position: relative;
+  overflow: hidden;
+  margin-block: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 30px;
+  background: linear-gradient(
+    180deg,
+    rgba(20, 20, 22, 0.9),
+    rgba(9, 9, 11, 0.98)
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    0 30px 60px -40px rgba(34, 229, 192, 0.22);
+}
+
+@media (max-width: 640px) {
+  .section-shell {
+    border-radius: 24px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.03),
+      0 18px 40px -30px rgba(34, 229, 192, 0.18);
+  }
+
+  .section-shell::before,
+  .section-shell::after {
+    filter: blur(52px);
+    opacity: 0.28;
+  }
+}
+
+@media (min-width: 1280px) {
+  .section-shell {
+    border-radius: 32px;
+  }
+}
+
+.section-shell::before,
+.section-shell::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  border-radius: 999px;
+  filter: blur(80px);
+  opacity: 0.38;
+  animation: section-glow-drift 18s ease-in-out infinite alternate;
+}
+
+.section-shell::before {
+  top: -8rem;
+  right: -5rem;
+  width: 24rem;
+  height: 24rem;
+  background: radial-gradient(
+    circle,
+    rgba(124, 92, 255, 0.45),
+    transparent 62%
+  );
+}
+
+.section-shell::after {
+  bottom: -8rem;
+  left: -5rem;
+  width: 20rem;
+  height: 20rem;
+  background: radial-gradient(circle, rgba(255, 61, 71, 0.32), transparent 60%);
+  animation-delay: 1s;
+}
+
+.section-shell > * {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes section-glow-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-16px, 12px, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(18px, -10px, 0) scale(0.96);
+  }
 }
 
 ::selection {
-  background: #F2A65A;
-  color: #0E1420;
+  background: var(--color-amber);
+  color: var(--color-ink);
 }
 
 ::-webkit-scrollbar {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #0E1420;
+  background: var(--color-scrollbar-track);
 }
 ::-webkit-scrollbar-thumb {
-  background: #2A3448;
+  background: var(--color-scrollbar-thumb);
   border-radius: 999px;
 }
 
 /* Respect reduced-motion preferences globally */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
@@ -41,6 +175,18 @@ a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid #5EEAD4;
+  outline: 2px solid var(--color-cyan);
   outline-offset: 2px;
+}
+
+/* Desktop-only custom cursor dot; see CustomCursor.jsx. Untouched on touch
+   devices and under prefers-reduced-motion, where the native cursor rules. */
+@media (hover: hover) and (pointer: fine) {
+  body.has-custom-cursor {
+    cursor: none;
+  }
+  body.has-custom-cursor a,
+  body.has-custom-cursor button {
+    cursor: none;
+  }
 }

@@ -4,6 +4,7 @@ import cors from "cors";
 import { connectDB } from "./config/db.js";
 import publicRoutes from "./routes/publicRoutes.js";
 import aiRoutes from "./routes/aiRoutes.js";
+import contactRoutes from "./routes/contactRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
@@ -35,6 +36,7 @@ app.get("/api/health", (req, res) => {
 
 app.use("/api", publicRoutes);
 app.use("/api/ai", aiRoutes);
+app.use("/api", contactRoutes);
 
 // Admin + upload routes are only ever mounted when this instance is running
 // in local admin mode. On a public deployment they don't exist at all —
