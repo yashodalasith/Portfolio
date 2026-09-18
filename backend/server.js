@@ -10,6 +10,7 @@ import uploadRoutes from "./routes/uploadRoutes.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
 
 const app = express();
+app.set("trust proxy", 1);
 app.use(express.json({ limit: "2mb" }));
 
 const allowedOrigins = (process.env.CLIENT_ORIGIN || "")
