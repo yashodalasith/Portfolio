@@ -1,0 +1,26 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Yashodha Jayasinghe Portfolio Icon</title>
+  <desc id="desc">Modern portfolio brand icon with initials YJ on a dark blue gradient background.</desc>
+  <defs>
+    <linearGradient id="bg" x1="72" y1="72" x2="440" y2="440" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B1020"/>
+      <stop offset="0.5" stop-color="#111827"/>
+      <stop offset="1" stop-color="#1F2937"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="120" y1="120" x2="400" y2="400" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7DD3FC"/>
+      <stop offset="0.45" stop-color="#A78BFA"/>
+      <stop offset="1" stop-color="#F9A8D4"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="128" fill="url(#bg)"/>
+  <circle cx="380" cy="118" r="58" fill="url(#accent)" opacity="0.22"/>
+  <circle cx="130" cy="402" r="70" fill="url(#accent)" opacity="0.14"/>
+
+  <path d="M146 136H214L273 242L332 136H400L290 286V380H222V286L146 136Z" fill="url(#accent)"/>
+  <path d="M223 136H290L380 380H308L282 314H231L206 380H136L223 136ZM252 247L238 279H273L252 247Z" fill="#F8FAFC"/>
+
+  <path d="M154 130H204L145 208H93L154 130Z" fill="#F8FAFC" opacity="0.9"/>
+  <path d="M356 130H406L347 208H295L356 130Z" fill="#F8FAFC" opacity="0.9"/>
+</svg>
