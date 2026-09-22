@@ -13,6 +13,7 @@ const ProjectSchema = new mongoose.Schema(
     imageUrl: String,
     imageUrls: [String],
     featured: { type: Boolean, default: false },
+    show: { type: Boolean, default: true },
     order: { type: Number, default: 0 },
   },
   { timestamps: true },

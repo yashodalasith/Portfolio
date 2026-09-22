@@ -4,6 +4,8 @@ import Project from "../models/Project.js";
 import Certification from "../models/Certification.js";
 import Education from "../models/Education.js";
 
+const visibleProjects = { $or: [{ show: true }, { show: { $exists: false } }] };
+
 // Assembles everything in the database into one compact plain-text block
 // that gets dropped into the system prompt. Keeping this as plain text
 // (rather than raw JSON) keeps token usage down and reads more naturally
@@ -12,7 +14,7 @@ export async function buildAIContext() {
   const [profile, experiences, projects, certifications, education] = await Promise.all([
     Profile.findOne().lean(),
     Experience.find().sort({ order: 1 }).lean(),
-    Project.find().sort({ order: 1 }).lean(),
+    Project.find(visibleProjects).sort({ order: 1 }).lean(),
     Certification.find().sort({ order: 1 }).lean(),
     Education.find().sort({ order: 1 }).lean(),
   ]);

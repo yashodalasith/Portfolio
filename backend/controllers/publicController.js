@@ -4,6 +4,8 @@ import Project from "../models/Project.js";
 import Certification from "../models/Certification.js";
 import Education from "../models/Education.js";
 
+const visibleProjects = { $or: [{ show: true }, { show: { $exists: false } }] };
+
 // All of these are read-only and safe to expose publicly.
 
 export async function getProfile(req, res, next) {
@@ -26,7 +28,7 @@ export async function getExperiences(req, res, next) {
 
 export async function getProjects(req, res, next) {
   try {
-    const projects = await Project.find().sort({ order: 1 });
+    const projects = await Project.find(visibleProjects).sort({ order: 1 });
     res.json(projects);
   } catch (err) {
     next(err);
@@ -58,7 +60,7 @@ export async function getAll(req, res, next) {
     const [profile, experiences, projects, certifications, education] = await Promise.all([
       Profile.findOne(),
       Experience.find().sort({ order: 1 }),
-      Project.find().sort({ order: 1 }),
+      Project.find(visibleProjects).sort({ order: 1 }),
       Certification.find().sort({ order: 1 }),
       Education.find().sort({ order: 1 }),
     ]);

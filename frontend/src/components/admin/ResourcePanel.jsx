@@ -5,7 +5,7 @@ import ImageUploadField from "./ImageUploadField.jsx";
 
 const emptyValueFor = (field) => {
   if (field.type === "tags" || field.type === "lines") return [];
-  if (field.type === "checkbox") return false;
+  if (field.type === "checkbox") return field.defaultValue ?? false;
   if (field.type === "number") return 0;
   return "";
 };

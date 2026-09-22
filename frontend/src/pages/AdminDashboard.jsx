@@ -30,7 +30,7 @@ const RESOURCE_CONFIG = {
   projects: {
     resource: "project",
     title: "Projects",
-    listEndpoint: "/projects",
+    listEndpoint: "/admin/project",
     fields: [
       { key: "title", label: "Title", type: "text" },
       { key: "category", label: "Category", type: "text" },
@@ -42,6 +42,12 @@ const RESOURCE_CONFIG = {
       { key: "liveUrl", label: "Live URL", type: "text" },
       { key: "imageUrls", label: "Project images", type: "images" },
       { key: "featured", label: "Featured", type: "checkbox" },
+      {
+        key: "show",
+        label: "Show on portfolio",
+        type: "checkbox",
+        defaultValue: true,
+      },
       { key: "order", label: "Order", type: "number" },
     ],
   },

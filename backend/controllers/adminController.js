@@ -72,6 +72,17 @@ export async function updateItem(req, res, next) {
   }
 }
 
+export async function listItems(req, res, next) {
+  try {
+    const Model = getModel(req, res);
+    if (!Model) return;
+    const items = await Model.find().sort({ order: 1 });
+    res.json(items);
+  } catch (err) {
+    next(err);
+  }
+}
+
 export async function deleteItem(req, res, next) {
   try {
     const Model = getModel(req, res);

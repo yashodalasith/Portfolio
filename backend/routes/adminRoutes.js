@@ -1,7 +1,7 @@
 import { Router } from "express";
 import rateLimit from "express-rate-limit";
 import adminAuth from "../middleware/adminAuth.js";
-import { login, updateProfile, createItem, updateItem, deleteItem } from "../controllers/adminController.js";
+import { login, updateProfile, listItems, createItem, updateItem, deleteItem } from "../controllers/adminController.js";
 
 const router = Router();
 
@@ -12,6 +12,7 @@ router.post("/login", loginLimiter, login);
 
 // Everything below requires a valid admin token AND ENABLE_ADMIN=true.
 router.put("/profile", adminAuth, updateProfile);
+router.get("/:resource", adminAuth, listItems);
 router.post("/:resource", adminAuth, createItem); // resource: experience | project | certification | education
 router.put("/:resource/:id", adminAuth, updateItem);
 router.delete("/:resource/:id", adminAuth, deleteItem);
